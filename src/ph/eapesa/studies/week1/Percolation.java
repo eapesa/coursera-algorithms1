@@ -1,4 +1,4 @@
-package ph.eapesa.studies;
+package ph.eapesa.studies.week1;
 
 import edu.princeton.cs.algs4.QuickUnionUF;
 

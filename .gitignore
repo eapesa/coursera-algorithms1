@@ -28,4 +28,7 @@ hs_err_pid*
 # Intellij Generated Files
 .idea
 
+# Miscellaneous
+.DS_Store
+
 # End of https://www.gitignore.io/api/java
