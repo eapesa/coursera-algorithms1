@@ -42,7 +42,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         if (first == null) {
             first = new Node(item, null);
-            first = last;
+            last = first;
         } else {
             Node newFirst = new Node(item, first);
             first = newFirst;
@@ -57,7 +57,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         if (first == null) {
             first = new Node(item, null);
-            first = last;
+            last = first;
         } else {
             last.next = new Node(item, null);
             last = last.next;
@@ -87,7 +87,6 @@ public class Deque<Item> implements Iterable<Item> {
 
     @Override
     public Iterator<Item> iterator() {
-        System.out.printf("IS FIRST NULL? " + (first == null));
         return new DequeIterator();
     }
 
@@ -115,7 +114,6 @@ public class Deque<Item> implements Iterable<Item> {
         deque.addLast(3);
 
         Iterator<Integer> d = deque.iterator();
-        System.out.println("Hi! "+d.hasNext());
         while (d.hasNext()) {
             System.out.printf("ITEM: %d\n", d.next());
         }
