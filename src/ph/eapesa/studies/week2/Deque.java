@@ -113,6 +113,7 @@ public class Deque<Item> implements Iterable<Item> {
             return current != null;
         }
 
+        @Override
         public Item next() {
             Item item = current.item;
             current = current.next;
