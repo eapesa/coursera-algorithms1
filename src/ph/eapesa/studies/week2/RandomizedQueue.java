@@ -86,6 +86,9 @@ public class RandomizedQueue<Item> {
 
         @Override
         public Item next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             Item item = queue[current];
             current++;
             return item;
