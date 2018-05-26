@@ -23,51 +23,78 @@ public class RandomizedQueue<Item> {
     }
 
     public void enqueue(Item item) {
+        queue[size] = item;
         size++;
         resize();
-        queue[size] = item;
     }
 
-//    public Item dequeue() {
-//        if (size == 0) {
-//            throw new NoSuchElementException();
-//        }
-//        int index = StdRandom.uniform(0, size);
-//        Item item = queue[index];
-//        --size;
-//        transfer(index, capacity);
-//        return item;
-//    }
+    public Item dequeue() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
 
-//    public Item sample() {
-//
-//    }
-//
-//    @Override
-//    public Iterator<Item> iterator() {
-//        return null;
-//    }
+        int index = StdRandom.uniform(0, size);
+        Item item = queue[index];
+        --size;
+        queue[index] = queue[size];
+        queue[size] = null;
+        resize();
+        return item;
+    }
+
+    public Item sample() {
+        return queue[StdRandom.uniform(0, size)];
+    }
+
+    public Iterator<Item> iterator() {
+        return new RandomizedQueueIterator();
+    }
 
     private void resize() {
         if (size >= capacity) {
             capacity = capacity * 2;
-            transfer(0, capacity);
+            transfer(capacity);
         }
 
         if (size <= (capacity / 4)) {
             capacity = capacity / 2;
-            transfer(0, capacity);
+            transfer(capacity);
         }
 
         return;
     }
 
-    private void transfer(int index, int capacity) {
+    private void transfer(int capacity) {
         Item[] newQueue = (Item[]) new Object[capacity];
-        for (int i = index; i < size; i++) {
+        for (int i = 0; i < size; i++) {
             newQueue[i] = queue[i];
         }
         queue = newQueue;
+    }
+
+    private class RandomizedQueueIterator implements Iterator<Item> {
+        private int current;
+
+        public RandomizedQueueIterator() {
+            current = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != size;
+        }
+
+        @Override
+        public Item next() {
+            Item item = queue[current];
+            current++;
+            return item;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 
     public static void main(String[] args) {
@@ -76,8 +103,14 @@ public class RandomizedQueue<Item> {
         rq.enqueue(20);
         rq.enqueue(30);
         rq.enqueue(40);
-        System.out.println("DEQ: " + rq.dequeue());
-        System.out.println("DEQ: " + rq.dequeue());
-        System.out.println("DEQ: " + rq.dequeue());
+
+        Iterator rqiter = rq.iterator();
+        System.out.println("DEQ: " + rq.dequeue() + "\n===");
+        System.out.println("DEQ: " + rq.dequeue() + "\n===");
+        while (rqiter.hasNext()) {
+            System.out.println("Q: " + rqiter.next());
+        }
+        System.out.println("DEQ: " + rq.dequeue() + "\n===");
+        System.out.println("DEQ: " + rq.dequeue() + "\n===");
     }
 }
