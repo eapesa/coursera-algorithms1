@@ -73,15 +73,22 @@ public class RandomizedQueue<Item> {
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
-        private int current;
+        private int current, iterSize;
+        private int[] shuffledIndex;
 
         public RandomizedQueueIterator() {
             current = 0;
+            iterSize = size;
+            shuffledIndex = new int[iterSize];
+            for (int i = 0; i < iterSize; i++) {
+                shuffledIndex[i] = i;
+            }
+            StdRandom.shuffle(shuffledIndex);
         }
 
         @Override
         public boolean hasNext() {
-            return current != size;
+            return current != iterSize;
         }
 
         @Override
