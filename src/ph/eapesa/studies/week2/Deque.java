@@ -1,28 +1,27 @@
 package ph.eapesa.studies.week2;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
 
+    private int size;
+    private Node first, last;
+
     private class Node {
-        Item item;
-        Node next;
-        Node previous;
-        Node(Item item) {
+        public Item item;
+        public Node next;
+        public Node previous;
+        public Node(Item item) {
             this.item = item;
             next = null;
             previous = null;
         }
-        Node(Item item, Node next, Node previous) {
+        public Node(Item item, Node next, Node previous) {
             this.item = item;
             this.next = next;
             this.previous = previous;
         }
     }
-
-    private int size;
-    private Node first, last;
 
     public Deque() {
         size = 0;
@@ -40,13 +39,14 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addFirst(Item item) {
         if (item == null) {
-            throw new IllegalArgumentException();
+            throw new java.lang.IllegalArgumentException();
         }
 
         if ((first == null) && (last == null)) {
             first = new Node(item, null, null);
             last = first;
-        } else {
+        }
+        else {
             Node newFirst = new Node(item, first, null);
             first.previous = newFirst;
             first = newFirst;
@@ -56,13 +56,14 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void addLast(Item item) {
         if (item == null) {
-            throw new IllegalArgumentException();
+            throw new java.lang.IllegalArgumentException();
         }
 
         if ((first == null) && (last == null)) {
             last = new Node(item, null, null);
             first = last;
-        } else {
+        }
+        else {
             Node newLast = new Node(item, null, last);
             last.next = newLast;
             last = newLast;
@@ -72,13 +73,14 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Item removeFirst() {
         if (first == null) {
-            throw new NoSuchElementException();
+            throw new java.util.NoSuchElementException();
         }
         Item item = first.item;
         if (first.next != null) {
             first = first.next;
             first.previous = null;
-        } else {
+        }
+        else {
             first = null;
         }
         --size;
@@ -87,13 +89,14 @@ public class Deque<Item> implements Iterable<Item> {
 
     public Item removeLast() {
         if (last == null) {
-            throw new NoSuchElementException();
+            throw new java.util.NoSuchElementException();
         }
         Item item = last.item;
         if (last.previous != null) {
             last = last.previous;
             last.next = null;
-        } else {
+        }
+        else {
             last = null;
         }
         --size;
@@ -116,7 +119,7 @@ public class Deque<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             if (!hasNext()) {
-                throw new NoSuchElementException();
+                throw new java.util.NoSuchElementException();
             }
             Item item = current.item;
             current = current.next;
@@ -125,7 +128,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException();
+            throw new java.lang.UnsupportedOperationException();
         }
     }
 
@@ -160,3 +163,4 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 }
+

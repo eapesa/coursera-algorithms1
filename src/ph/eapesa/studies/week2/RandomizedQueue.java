@@ -1,8 +1,7 @@
 package ph.eapesa.studies.week2;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdRandom;
+import java.util.Iterator;
 
 public class RandomizedQueue<Item> {
     private int size, capacity;
@@ -30,7 +29,7 @@ public class RandomizedQueue<Item> {
 
     public Item dequeue() {
         if (size == 0) {
-            throw new NoSuchElementException();
+            throw new java.util.NoSuchElementException();
         }
 
         int index = StdRandom.uniform(0, size);
@@ -64,8 +63,8 @@ public class RandomizedQueue<Item> {
         return;
     }
 
-    private void transfer(int capacity) {
-        Item[] newQueue = (Item[]) new Object[capacity];
+    private void transfer(int cap) {
+        Item[] newQueue = (Item[]) new Object[cap];
         for (int i = 0; i < size; i++) {
             newQueue[i] = queue[i];
         }
@@ -73,8 +72,9 @@ public class RandomizedQueue<Item> {
     }
 
     private class RandomizedQueueIterator implements Iterator<Item> {
-        private int current, iterSize;
-        private int[] shuffledIndex;
+        private int current;
+        private final int iterSize;
+        private final int[] shuffledIndex;
 
         public RandomizedQueueIterator() {
             current = 0;
@@ -94,7 +94,7 @@ public class RandomizedQueue<Item> {
         @Override
         public Item next() {
             if (!hasNext()) {
-                throw new NoSuchElementException();
+                throw new java.util.NoSuchElementException();
             }
             Item item = queue[current];
             current++;
@@ -103,7 +103,7 @@ public class RandomizedQueue<Item> {
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException();
+            throw new java.lang.UnsupportedOperationException();
         }
     }
 
@@ -114,7 +114,7 @@ public class RandomizedQueue<Item> {
         rq.enqueue(30);
         rq.enqueue(40);
 
-        Iterator rqiter = rq.iterator();
+        Iterator<Integer> rqiter = rq.iterator();
         System.out.println("DEQ: " + rq.dequeue() + "\n===");
         System.out.println("DEQ: " + rq.dequeue() + "\n===");
         while (rqiter.hasNext()) {
