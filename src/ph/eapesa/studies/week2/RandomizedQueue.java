@@ -3,7 +3,7 @@ package ph.eapesa.studies.week2;
 import edu.princeton.cs.algs4.StdRandom;
 import java.util.Iterator;
 
-public class RandomizedQueue<Item> {
+public class RandomizedQueue<Item> implements Iterable<Item> {
     private int size, capacity;
     private Item[] queue;
 
@@ -45,6 +45,7 @@ public class RandomizedQueue<Item> {
         return queue[StdRandom.uniform(0, size)];
     }
 
+    @Override
     public Iterator<Item> iterator() {
         return new RandomizedQueueIterator();
     }
