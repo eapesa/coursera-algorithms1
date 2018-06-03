@@ -4,34 +4,47 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
-import javax.sound.sampled.Line;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class FastCollinearPoints {
-    LineSegment[] lineSegments;
+    private LineSegment[] lineSegments;
+
     public FastCollinearPoints(Point[] points) {
         if (points == null) {
             throw new java.lang.IllegalArgumentException();
         }
+
         Point[] copy = Arrays.copyOf(points, points.length);
         ArrayList<LineSegment> collinears = new ArrayList<>();
-        for (int i = 0; i < copy.length - 1; i++) {
-            Arrays.sort(copy, copy[i].slopeOrder());
-            double prevSlope = Double.NEGATIVE_INFINITY;
-            int count = 0;
-            for (int j = i + 1; j < copy.length; j++) {
-                double currSlope = copy[i].slopeTo(copy[j]);
-                if (currSlope == prevSlope) {
-                    count++;
-                } else {
-                    count = 0;
-                }
+        for (Point index : points) {
+            Arrays.sort(copy, index.slopeOrder());
 
-                if (count == 4) {
-                    collinears.add(new LineSegment(copy[i], copy[j]));
-                    count = 0;
+            double prevSlope = Double.NEGATIVE_INFINITY;
+            double currSlope = 0;
+            ArrayList<Point> sameSlopePoints = new ArrayList<>();
+
+            for (int j = 1; j < copy.length; j++) {
+                currSlope = index.slopeTo(copy[j]);
+                if (currSlope != prevSlope) {
+                    if (sameSlopePoints.size() >= 3) {
+                        sameSlopePoints.add(index);
+                        Collections.sort(sameSlopePoints);
+                        collinears.add(new LineSegment(sameSlopePoints.get(0),
+                                sameSlopePoints.get(sameSlopePoints.size() - 1)));
+                    }
+                    sameSlopePoints.clear();
                 }
+                sameSlopePoints.add(copy[j]);
+                prevSlope = currSlope;
+            }
+
+            if (sameSlopePoints.size() >= 3) {
+                sameSlopePoints.add(index);
+                Collections.sort(sameSlopePoints);
+                collinears.add(new LineSegment(sameSlopePoints.get(0),
+                        sameSlopePoints.get(sameSlopePoints.size() - 1)));
             }
         }
         lineSegments = collinears.toArray(new LineSegment[collinears.size()]);
@@ -79,6 +92,5 @@ public class FastCollinearPoints {
             segment.draw();
         }
         StdDraw.show();
-        System.out.println("SEGMENTS: " + collinear.numberOfSegments());
     }
 }

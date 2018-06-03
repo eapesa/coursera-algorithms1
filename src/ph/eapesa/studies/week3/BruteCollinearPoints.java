@@ -9,6 +9,7 @@ import java.util.Arrays;
 
 public class BruteCollinearPoints {
     private LineSegment[] lineSegments;
+
     public BruteCollinearPoints(Point[] points) {
         if (points == null) {
             throw new java.lang.IllegalArgumentException();
@@ -70,7 +71,6 @@ public class BruteCollinearPoints {
             segment.draw();
         }
         StdDraw.show();
-        System.out.println("SEGMENTS: " + collinear.numberOfSegments());
         for (int i = 0; i < collinear.numberOfSegments(); i++) {
             System.out.println(collinear.lineSegments[i].toString());
         }
